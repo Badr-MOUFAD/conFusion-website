@@ -1,82 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 //layout
 import { Container, Row, Col } from 'reactstrap';
 
 //reactstrap components
-import { Media } from 'reactstrap';
+import { Card, CardBody, CardImg, CardImgOverlay, CardText, CardTitle } from 'reactstrap';
 
 
 export function MenuItem(props) {
+    const dish = props.dish;
 
     return(
-        <Media key={props.id} tag="li" className="mt-5">
-            <Media left href="#" className="mr-5">
-                <Media object src={props.image} alt={props.name} />
-            </Media>
-            <Media body> 
-                <Media heading> 
-                    {props.name}
-                </Media>
-                <p>{props.description}</p>
-            </Media>
-        </Media>
+        <Col xs={12} md={{size: 5}} onClick={() => props.onSelectedMenuItem(dish)}>
+            <Card>
+                <CardImg width="100%" src={dish.image} alt={dish.name}/>
+                <CardImgOverlay>
+                    <CardTitle>{dish.name}</CardTitle>
+                </CardImgOverlay>
+            </Card>
+        </Col>
     );
 }
 
-MenuItem.prototype = {
-    id: PropTypes.number,
-    image: PropTypes.string,
-    name: PropTypes.string,
-    description: PropTypes.string
+export function MenuItemDescription(props) {
+    const dish = props.dish;
+
+    if(!dish)
+        return <div></div>
+
+    return(
+        <Card>
+            <CardImg top src={dish.image} alt={dish.name}/>
+            <CardBody>
+                <CardTitle>{dish.name}</CardTitle>
+                <CardText>{dish.description}</CardText>
+            </CardBody>
+        </Card>
+    );
 }
 
 
 function Menu(props) {
+    const dishes = props.dishes;
 
-    const dishes = [
-        {
-          id: 0,
-          name:'Uthappizza',
-          image: 'assets/images/uthappizza.png',
-          category: 'mains',
-          label:'Hot',
-          price:'4.99',
-          description:'A unique combination of Indian Uthappam (pancake) and Italian pizza, topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.'                        },
-       {
-          id: 1,
-          name:'Zucchipakoda',
-          image: 'assets/images/zucchipakoda.png',
-          category: 'appetizer',
-          label:'',
-          price:'1.99',
-          description:'Deep fried Zucchini coated with mildly spiced Chickpea flour batter accompanied with a sweet-tangy tamarind sauce'                        },
-       {
-          id: 2,
-          name:'Vadonut',
-          image: 'assets/images/vadonut.png',
-          category: 'appetizer',
-          label:'New',
-          price:'1.99',
-          description:'A quintessential ConFusion experience, is it a vada or is it a donut?'                        },
-       {
-          id: 3,
-          name:'ElaiCheese Cake',
-          image: 'assets/images/elaicheesecake.png',
-          category: 'dessert',
-          label:'',
-          price:'2.99',
-          description:'A delectable, semi-sweet New York Style Cheese Cake, with Graham cracker crust and spiced with Indian cardamoms'                        }
-    ];
+    const [selectedDish, setSelectedDish] = useState(null);
 
     return(
         <Container fluid>
             <Row>
-                <Media list className="mr-5">
-                    {dishes.map((dish) => 
-                    <MenuItem id={dish.id} name={dish.name} image={dish.image} description={dish.description}/>)}
-                </Media>
+                {dishes.map((dish) => 
+                <MenuItem dish={dish} onSelectedMenuItem={(newSelectedDish) => setSelectedDish(newSelectedDish)}/>)}
+            </Row>
+            <Row>
+                <Col xs={12} md={5}><MenuItemDescription dish={selectedDish}/></Col>
             </Row>
         </Container>
     );
