@@ -1,9 +1,9 @@
 import React from 'react';
-
 //layout
 import { Row, Col } from 'reactstrap';
 //reactstrap component 
 import { Card, CardBody, CardImg, CardTitle, CardText } from 'reactstrap';
+
 
 function DishDetailComponent(props) {
     const dish = props.dish;
@@ -40,16 +40,26 @@ function DishDetailComponent(props) {
 }
 
 export function CommentComponent(props) {
-    const comment = props.commentObject;
+    const commentObject = props.commentObject;
 
     return(
-        <Row key={comment.id} tag="dl" className="mb-3">
-            <Col tag="dt" xs={2}>{comment.author}</Col>
+        <Row key={commentObject.id} tag="dl" className="mb-3">
+            <Col tag="dt" xs={2}>{commentObject.author}</Col>
             <Col tag="dd" xs={{size: 9, offset: 1}}>
-                <p>{comment.comment}</p>
-                <small className="text-muted">{comment.date}</small>
+                <p>{commentObject.comment}</p>
+                <CommentDate date={commentObject.date}/>
             </Col>
         </Row>
+    );
+}
+
+export function CommentDate(props) {
+    const date = new Date(props.date);
+
+    let dateToDisplay = Intl.DateTimeFormat('en-Us', {year: 'numeric', month: 'short', day: '2-digit'}).format(date);
+
+    return(
+        <small className="text-muted">{dateToDisplay}</small>
     );
 }
 

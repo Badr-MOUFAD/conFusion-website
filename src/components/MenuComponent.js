@@ -8,7 +8,6 @@ import { Card, CardBody, CardImg, CardImgOverlay, CardText, CardTitle } from 're
 import DishDetailComponent from './DishDetailComponent';
 
 
-
 export function MenuItem(props) {
     const dish = props.dish;
 
@@ -25,7 +24,7 @@ export function MenuItem(props) {
 }
 
 
-function Menu(props) {
+export default function Menu(props) {
     const dishes = props.dishes;
 
     const [selectedDish, setSelectedDish] = useState(null);
@@ -40,6 +39,3 @@ function Menu(props) {
         </Container>
     );
 }
-
-
-export default Menu;
