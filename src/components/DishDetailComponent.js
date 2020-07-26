@@ -25,7 +25,7 @@ function DishDetailComponent(props) {
                     <Card>
                         <CardImg top src={dish.image} alt={dish.name}/>
                         <CardBody>
-                            <CardTitle>{dish.name}</CardTitle>
+                            <CardTitle><h5>{dish.name}</h5></CardTitle>
                             <CardText>{dish.description}</CardText>
                         </CardBody>
                     </Card>
@@ -70,11 +70,15 @@ export function DividerComponent(props) {
 
     return(       
         <Row className="d-flex justify-content-center mt-5 mb-5">
-            <Col xs={4} style={style}></Col>
+            <Col xs={4}>
+                <hr />
+            </Col>
             <Col xs={2}>
                 <h6 className="text-muted text-center">{props.text}</h6>
             </Col>
-            <Col xs={4} style={style}></Col>
+            <Col xs={4}>
+                <hr />
+            </Col>
         </Row> 
     );
 }

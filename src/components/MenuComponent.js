@@ -4,8 +4,28 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 //reactstrap components
 import { Card, CardBody, CardImg, CardImgOverlay, CardText, CardTitle } from 'reactstrap';
+import { Badge } from 'reactstrap';
 //my Component
 import DishDetailComponent from './DishDetailComponent';
+
+
+
+export default function MenuComponent(props) {
+    const dishes = props.dishes;
+
+    const [selectedDish, setSelectedDish] = useState(null);
+
+    return(
+        <Container fluid>
+            <Row className="d-flex justify-content-center row-content" style={{borderBottomWidth: '0px'}}>
+                {dishes.map((dish) => 
+                <MenuItem dish={dish} onSelectedMenuItem={(newSelectedDish) => setSelectedDish(newSelectedDish)}/>
+                )}
+            </Row>
+            <DishDetailComponent dish={selectedDish}/>
+        </Container>
+    );
+}
 
 
 export function MenuItem(props) {
@@ -16,26 +36,11 @@ export function MenuItem(props) {
             <Card>
                 <CardImg width="100%" src={dish.image} alt={dish.name}/>
                 <CardImgOverlay>
-                    <CardTitle>{dish.name}</CardTitle>
+                    <CardTitle>
+                        <Badge pill color="secondary"><strong className="lead">{dish.name}</strong></Badge>
+                    </CardTitle>
                 </CardImgOverlay>
             </Card>
         </Col>
-    );
-}
-
-
-export default function Menu(props) {
-    const dishes = props.dishes;
-
-    const [selectedDish, setSelectedDish] = useState(null);
-
-    return(
-        <Container fluid >
-            <Row className="d-flex justify-content-center">
-                {dishes.map((dish) => 
-                <MenuItem dish={dish} onSelectedMenuItem={(newSelectedDish) => setSelectedDish(newSelectedDish)}/>)}
-            </Row>
-            <DishDetailComponent dish={selectedDish}/>
-        </Container>
     );
 }
