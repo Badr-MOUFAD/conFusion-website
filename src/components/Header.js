@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 //navigation
 import { NavLink } from 'react-router-dom';
 //layout
-import { Container, Row, Col, ListGroup, Button, Collapse, NavbarToggler} from "reactstrap";
+import { Container, Row, Col, Collapse, NavbarToggler} from "reactstrap";
 //reactstrap component
 import { Navbar, NavbarBrand, Nav, NavItem } from 'reactstrap';
 import { Jumbotron } from 'reactstrap';
@@ -16,14 +16,13 @@ export default function Header(props) {
     return(
         <frameElement>
             <Navbar className="my-0 navbar-dark" expand="md" fixed="top" dark>
-                <Container>
-                    <NavbarBrand className="mr-5" href="/">
-                        <img src="assets/images/logo.png" alt="Ristorante Con Fusion" width="60" height="41"/>
-                    </NavbarBrand>
-                    <NavbarToggler onClick={() => setIsOpenCollapse(!isOpenCollapse)}/>
-                    <AppRoutes isOpenCollapse={isOpenCollapse} routes={PAGES}/>
-                </Container>
+                <NavbarBrand className="mx-3" href="/">
+                    <img src={"/assets/images/logo.png"} alt="Ristorante Con Fusion" width="60" height="41"/>
+                </NavbarBrand>
+                <NavbarToggler onClick={() => setIsOpenCollapse(!isOpenCollapse)}/>
+                <AppRoutes isOpenCollapse={isOpenCollapse} routes={PAGES}/>  
             </Navbar>
+            
             <Jumbotron className="jumbotron">
                 <JumbotronContent/>
             </Jumbotron>

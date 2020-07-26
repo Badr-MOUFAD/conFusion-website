@@ -1,11 +1,13 @@
 import React from 'react';
 //layout
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Container } from 'reactstrap';
 //reactstrap component 
 import { Card, CardBody, CardImg, CardTitle, CardText } from 'reactstrap';
+//m component
+import BreadcrumbComponent from './BreadcrumbComponent';
 
 
-function DishDetailComponent(props) {
+export default function DishDetailComponent(props) {
     const dish = props.dish;
 
     if(!dish)
@@ -18,8 +20,10 @@ function DishDetailComponent(props) {
         commentSection = comments.map((comment) => <CommentComponent commentObject={comment} />);
 
     return(
-        <frameElement>
-            <DividerComponent text="Dish Details"/>
+        <Container fluid>
+            <BreadcrumbComponent location={props.location}/>
+            
+            <DividerComponent text={`${dish.name}`}/>
             <Row className="d-flex justify-content-center mb-5">
                 <Col xs={12} md={5}>
                     <Card>
@@ -35,7 +39,7 @@ function DishDetailComponent(props) {
                     {commentSection}
                 </Col>
             </Row>
-        </frameElement>
+        </Container>
     );
 }
 
@@ -74,7 +78,7 @@ export function DividerComponent(props) {
                 <hr />
             </Col>
             <Col xs={2}>
-                <h6 className="text-muted text-center">{props.text}</h6>
+                <h6 className="text-center lead">{props.text}</h6>
             </Col>
             <Col xs={4}>
                 <hr />
@@ -82,5 +86,3 @@ export function DividerComponent(props) {
         </Row> 
     );
 }
-
-export default DishDetailComponent;

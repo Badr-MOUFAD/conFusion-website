@@ -8,7 +8,7 @@ export const PAGES = [
     {
         id: 1,
         name: 'About us',
-        href: '/aboutus',
+        href: '/about-us',
         icon: 'fa fa-info fa-lg'
     },
     {
@@ -20,7 +20,7 @@ export const PAGES = [
     {
         id: 3,
         name: 'Contact us',
-        href: '/contactus',
+        href: '/contact-us',
         icon: 'fa fa-address-card fa-lg'
     }
 ];

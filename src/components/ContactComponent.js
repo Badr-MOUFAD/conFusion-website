@@ -3,12 +3,15 @@ import React from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 //components
 import { Card, CardHeader, CardBody, CardFooter } from 'reactstrap';
+//m component
+import BreadcrumbComponent from './BreadcrumbComponent';
 
 
 export default function ContactComponent(props) {
 
     return(
         <Container fluid>
+            <BreadcrumbComponent location={props.location}/>
             <Row className='row-content d-flex justify-content-center'>
                 <Col xs={12} sm={{size: 4, offset: 0}}>
                     <Card>
