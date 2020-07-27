@@ -10,7 +10,7 @@ import BreadcrumbComponent from './BreadcrumbComponent';
 export default function ContactComponent(props) {
 
     return(
-        <Container fluid>
+        <Container>
             <BreadcrumbComponent location={props.location}/>
             <Row className='row-content d-flex justify-content-center'>
                 <Col xs={12} sm={{size: 4, offset: 0}}>

@@ -13,7 +13,7 @@ export default function HomeComponent(props) {
         <Container>
             <Row className="row-content">
                 {items.map((itemToRender) => 
-                    <Col xs={{size: 12, offset: 0}} md={{size: 4, offset: 0}}>
+                    <Col xs={{size: 12, offset: 0}} md={{size: 4, offset: 0}} className="mb-2">
                         <RenderAsCard item={itemToRender}/>
                     </Col>
                 )}

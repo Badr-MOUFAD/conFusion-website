@@ -17,13 +17,13 @@ export default function DishDetailComponent(props) {
     let commentSection = <div>No comments about this dish</div>
 
     if(comments.length)
-        commentSection = comments.map((comment) => <CommentComponent commentObject={comment} />);
+        commentSection = comments.map((comment) => <CommentComponent key={comment.id} commentObject={comment} />);
 
     return(
-        <Container fluid>
+        <Container>
             <BreadcrumbComponent location={props.location}/>
             
-            <DividerComponent text={`${dish.name}`}/>
+            {/*<DividerComponent text={`${dish.name}`}/>*/}
             <Row className="d-flex justify-content-center mb-5">
                 <Col xs={12} md={5}>
                     <Card>

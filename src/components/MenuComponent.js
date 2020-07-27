@@ -15,7 +15,7 @@ export default function MenuComponent(props) {
     const dishes = props.dishes;
 
     return(
-        <Container fluid>
+        <Container>
             <BreadcrumbComponent location={props.location}/>
             <Row className="d-flex justify-content-center row-content" style={{borderBottomWidth: '0px'}}>
                 {dishes.map((dish) => <MenuItem key={dish.id} dish={dish}/>)}

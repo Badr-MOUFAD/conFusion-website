@@ -21,7 +21,7 @@ export default function Footer(props) {
                     <Col xs={7} sm={5} className="d-flex justify-content-center">
                         <AdressSection />
                     </Col>
-                    <Col xs={12} sm={4} className="align-self-center d-flex justify-content-center">
+                    <Col xs={12} sm={4} className="align-self-center d-flex justify-content-center mt-3">
                         <SocialMediaSection socialMedia={socialMedia}/>
                     </Col>
                 </Row>
@@ -55,13 +55,15 @@ export function AdressSection(props) {
 
     return(
         <div>
-            <h4><i class="fas fa-map-marker-alt"></i> Our Address</h4> 
-		    121, Clear Water Bay Road<br />
-		    Clear Water Bay, Kowloon<br />
-		    HONG KONG<br />
-		    <i class="fa fa-phone fa"></i> : +852 1234 5678<br />
-		    <i class="fa fa-fax fa"></i> : +852 8765 4321<br />
-		    <i class="fa fa-envelope fa"></i> : <a className="link-footer" href="mailto:confusion@food.net">confusion@food.net</a>
+            <h4><i class="fas fa-map-marker-alt"></i> Our Address</h4>
+            <address>
+                121, Clear Water Bay Road<br />
+		        Clear Water Bay, Kowloon<br />
+		        HONG KONG<br />
+		        <i class="fa fa-phone fa"></i> : +852 1234 5678<br />
+		        <i class="fa fa-fax fa"></i> : +852 8765 4321<br />
+		        <i class="fa fa-envelope fa"></i> : <a className="link-footer" href="mailto:confusion@food.net">confusion@food.net</a>
+            </address> 
 		</div>
     );
 }

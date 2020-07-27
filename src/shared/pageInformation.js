@@ -9,7 +9,7 @@ export const PAGES = [
         id: 1,
         name: 'About us',
         href: '/about-us',
-        icon: 'fa fa-info fa-lg'
+        icon: 'fas fa-info-circle fa-lg'
     },
     {
         id: 2,

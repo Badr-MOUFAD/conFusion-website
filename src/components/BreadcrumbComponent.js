@@ -1,6 +1,8 @@
 import React from 'react';
 //navigation
 import { Link } from 'react-router-dom';
+//layout
+import { Row, Container } from 'reactstrap';
 //component
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
@@ -10,23 +12,27 @@ export default function BreadcrumbComponent({ location }) {
     const links = createLinks(arrPathname);
 
     return(
-        <Breadcrumb>
-            <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
-            {links.map((link, index) => {
-                if(index == links.length - 1) 
-                    return <BreadcrumbItem active>{convertUnUsualString(arrPathname[index])}</BreadcrumbItem>
-
-                return(
-                    <BreadcrumbItem active={index == links.length ? true : false}>
-                        <Link to={link}>{convertUnUsualString(arrPathname[index])}</Link>
-                    </BreadcrumbItem>
-                );}
-            )}
-        </Breadcrumb>
+        <Container className="mb-2">
+            <Breadcrumb>
+                <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                    {links.map((link, index) => {
+                        if(index == links.length - 1) 
+                            return <BreadcrumbItem key={index} active>{convertUnUsualString(arrPathname[index])}</BreadcrumbItem>
+                    
+                        return(
+                            <BreadcrumbItem key={index} active={index == links.length ? true : false}>
+                                <Link to={link}>{convertUnUsualString(arrPathname[index])}</Link>
+                            </BreadcrumbItem>
+                        );}
+                    )}
+            </Breadcrumb>
+            <h3 className="mt-xs-2 mt-md-5">{convertUnUsualString(arrPathname[arrPathname.length -1])}</h3>
+            <hr />
+        </Container>
     );
 }
 
-function createLinks(arrPathname) {
+function createLinks(arrPathname) { /* ["page1", "subpage1"] --> ["/page1", /page1/subpage1] */
     let result = [];
 
     for(let i=0; i < arrPathname.length; i++) {
