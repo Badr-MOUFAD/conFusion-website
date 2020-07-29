@@ -1,13 +1,24 @@
 import React from 'react';
+import { useMultiState } from '../Hooks/useMultiState';
 //layout 
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 //components
 import { Card, CardHeader, CardBody, CardFooter } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 //m component
 import BreadcrumbComponent from './BreadcrumbComponent';
 
 
 export default function ContactComponent(props) {
+    const [formContact, setFormContact] = useMultiState({
+        firstName: '',
+        lastName: '',
+        telNum: '',
+        email: '',
+        agree: false,
+        contactType: 'Tel.',
+        message: ''
+    });
 
     return(
         <Container>
@@ -52,6 +63,108 @@ export default function ContactComponent(props) {
 
                         </CardBody>
                     </Card>
+                </Col>
+            </Row>
+            <Row className="row-content">
+                <Col xs={12} className="mb-2">
+                    <h3><i class="fas fa-comments mr-3"> </i>Your FeedBack</h3>
+                </Col>
+                <Col xs={12} md={9}>
+                    <Form onSubmit={(e) => {alert(JSON.stringify(formContact)); e.preventDefault()}}>
+                        <FormGroup row>
+                            <Label htmlFor="firstName" md={{size: 2, offset: 0}}>First Name</Label>
+                            <Col md={{size: 10, offset: 0}}>
+                                <Input
+                                    id="firstName"
+                                    type="text"
+                                    name="firstName"
+                                    placeholder="Enter Your First Name"
+                                    value={formContact.firstName}
+                                    onChange={({ target }) => setFormContact(target.name, target.value)}/>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label htmlFor="lastName" md={{size: 2, offset: 0}}>Last Name</Label>
+                            <Col md={{size: 10, offset: 0}}>
+                                <Input
+                                    id="lastName"
+                                    type="text"
+                                    name="lastName"
+                                    placeholder="Enter Your Last Name"
+                                    value={formContact.lastName}
+                                    onChange={({ target }) => setFormContact(target.name, target.value)}/>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label htmlFor="telNum" md={{size: 2, offset: 0}}>Tel Number</Label>
+                            <Col md={{size: 10, offset: 0}}>
+                                <Input
+                                    id="telNum"
+                                    type="tel"
+                                    name="telNum"
+                                    placeholder="Enter Your Tel Number"
+                                    value={formContact.telNum}
+                                    onChange={({ target }) => setFormContact(target.name, target.value)}/>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label htmlFor="email" md={{size: 2, offset: 0}}>Email</Label>
+                            <Col md={{size: 10, offset: 0}}>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    placeholder="Enter Your Email"
+                                    value={formContact.email}
+                                    onChange={({ target }) => setFormContact(target.name, target.value)}/>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row className="align-items-center">
+                            <Col md={{size: 6, offset: 2}}>
+                                <FormGroup check>
+                                    <Label htmlFor="agree" check>
+                                        <Input
+                                                id="agree"
+                                                type="checkbox"
+                                                name="agree"
+                                                checked={formContact.agree}
+                                                onChange={({ target }) => setFormContact(target.name, target.checked)}/>
+                                           <strong>May We Contact you?</strong>
+                                    </Label>
+                                </FormGroup>
+                            </Col>
+                            <Col md={{size: 3, offset: 1}}>
+                                <Input
+                                    name="contactType"
+                                    type="select" 
+                                    value={formContact.contactType}
+                                    onChange={({ target }) => setFormContact(target.name, target.value)}>
+                                    <option>Tel.</option>
+                                    <option>Email</option>
+                                </Input>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label htmlFor="message" md={{size: 2, offset: 0}}>Your FeedBack</Label>
+                            <Col md={{size: 10, offset: 0}}>
+                                <Input
+                                    id="message"
+                                    name="message"
+                                    type="textarea"
+                                    placeholder="Type Your Feedback"
+                                    rows={10}
+                                    value={formContact.message}
+                                    onChange={({ target }) => setFormContact(target.name, target.value)}/>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Col md={{size: 10, offset: 2}}>
+                                <Button type="submit" color="primary">
+                                    <i class="fas fa-paper-plane"></i> Send FeedBack
+                                </Button>
+                            </Col>
+                        </FormGroup>
+                    </Form>
                 </Col>
             </Row>
         </Container>
