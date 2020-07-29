@@ -5,6 +5,7 @@ import { Container, Row, Col } from 'reactstrap';
 //components
 import { Card, CardHeader, CardBody, CardFooter } from 'reactstrap';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { FormFeedback, FormText } from "reactstrap";
 //m component
 import BreadcrumbComponent from './BreadcrumbComponent';
 
@@ -19,6 +20,50 @@ export default function ContactComponent(props) {
         contactType: 'Tel.',
         message: ''
     });
+
+    const [errors, setErrors] = useMultiState({
+        firstName: null,
+        lastName: null,
+        telNum: null,
+        email: null
+    });
+
+    const handleValidate = (key) => {
+
+        switch (key) {
+            case "firstName":
+                if(formContact.firstName) {
+                    if(formContact.firstName.length > 10) {
+                        setErrors(key, "First Name must contain less than 10 caracters");
+                        break;
+                    }  
+                    if(formContact.firstName.length < 3) {
+                        setErrors(key, "First Name must contain more than 3 caracters");
+                        break;
+                    }
+                }
+
+                setErrors(key, "");
+                break;
+                case "lastName":
+                    if(formContact.lastName) {
+                        if(formContact.lastName.length > 10) {
+                            setErrors(key, "Last Name must contain less than 10 caracters");
+                            break;
+                        }  
+                        if(formContact.lastName.length < 3) {
+                            setErrors(key, "Last Name must contain more than 3 caracters");
+                            break;
+                        }
+                    }
+    
+                    setErrors(key, "");
+                    break;
+        
+            default:
+                break;
+        }
+    }
 
     return(
         <Container>
@@ -80,7 +125,14 @@ export default function ContactComponent(props) {
                                     name="firstName"
                                     placeholder="Enter Your First Name"
                                     value={formContact.firstName}
-                                    onChange={({ target }) => setFormContact(target.name, target.value)}/>
+                                    valid={!errors.firstName && formContact.firstName}
+                                    invalid={errors.firstName}
+                                    onBlur={() => handleValidate("firstName")}
+                                    onChange={({ target }) => {setFormContact(target.name, target.value);}}
+                                    />
+                                <FormText color={(errors.firstName) ? 'danger' : 'success'}>
+                                    {errors.firstName}
+                                </FormText>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
@@ -92,7 +144,14 @@ export default function ContactComponent(props) {
                                     name="lastName"
                                     placeholder="Enter Your Last Name"
                                     value={formContact.lastName}
-                                    onChange={({ target }) => setFormContact(target.name, target.value)}/>
+                                    valid={!errors.lastName && formContact.lastName}
+                                    invalid={errors.lastName}
+                                    onBlur={() => handleValidate("lastName")}
+                                    onChange={({ target }) => setFormContact(target.name, target.value)}
+                                    />
+                                <FormText color={(errors.lastName) ? 'danger' :'success'}>
+                                    {errors.lastName}
+                                </FormText>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
