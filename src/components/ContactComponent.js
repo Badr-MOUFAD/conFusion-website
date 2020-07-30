@@ -32,12 +32,12 @@ export default function ContactComponent(props) {
 
         switch (key) {
             case "firstName":
-                if(formContact.firstName) {
-                    if(formContact.firstName.length > 10) {
+                if(formContact[key]) {
+                    if(formContact[key].length > 10) {
                         setErrors(key, "First Name must contain less than 10 caracters");
                         break;
                     }  
-                    if(formContact.firstName.length < 3) {
+                    if(formContact[key].length < 3) {
                         setErrors(key, "First Name must contain more than 3 caracters");
                         break;
                     }
@@ -46,12 +46,12 @@ export default function ContactComponent(props) {
                 setErrors(key, "");
                 break;
                 case "lastName":
-                    if(formContact.lastName) {
-                        if(formContact.lastName.length > 10) {
+                    if(formContact[key]) {
+                        if(formContact[key].length > 10) {
                             setErrors(key, "Last Name must contain less than 10 caracters");
                             break;
                         }  
-                        if(formContact.lastName.length < 3) {
+                        if(formContact[key].length < 3) {
                             setErrors(key, "Last Name must contain more than 3 caracters");
                             break;
                         }
@@ -163,7 +163,8 @@ export default function ContactComponent(props) {
                                     name="telNum"
                                     placeholder="Enter Your Tel Number"
                                     value={formContact.telNum}
-                                    onChange={({ target }) => setFormContact(target.name, target.value)}/>
+                                    onChange={({ target }) => setFormContact(target.name, target.value)}
+                                    />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
@@ -197,7 +198,8 @@ export default function ContactComponent(props) {
                                     name="contactType"
                                     type="select" 
                                     value={formContact.contactType}
-                                    onChange={({ target }) => setFormContact(target.name, target.value)}>
+                                    onChange={({ target }) => setFormContact(target.name, target.value)}
+                                    >
                                     <option>Tel.</option>
                                     <option>Email</option>
                                 </Input>
@@ -213,7 +215,8 @@ export default function ContactComponent(props) {
                                     placeholder="Type Your Feedback"
                                     rows={10}
                                     value={formContact.message}
-                                    onChange={({ target }) => setFormContact(target.name, target.value)}/>
+                                    onChange={({ target }) => setFormContact(target.name, target.value)}
+                                    />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
