@@ -1,6 +1,8 @@
 import React from 'react';
+//redux
+import { connect } from 'react-redux';
 //navigaiton
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 //layout
 import { Container, Row, Col } from 'reactstrap';
 import { Navbar, NavbarBrand } from 'reactstrap';
@@ -13,17 +15,21 @@ import HomeComponent from './HomeComponent';
 import MenuComponent from './MenuComponent';
 import DishDetailComponent, { DividerComponent } from './DishDetailComponent';
 import AboutUsComponent from './AboutUsComponent';
-//data
-import { DISHES } from '../shared/dishes';
-import { LEADERS } from '../shared/leader';
-import { PROMOTIONS } from '../shared/promotions';
 
 
+const mapStateToProps = (state) => {
+  return {
+    dishes: state.dishes,
+    leaders: state.leaders,
+    promotions: state.promotions
+  }
+};
 
-export default function Main() {
-  const dishes = DISHES;
-  const leaders = LEADERS;
-  const promotions = PROMOTIONS;
+
+function Main(props) {
+  const dishes = props.dishes;
+  const leaders = props.leaders;
+  const promotions = props.promotions;
 
   function getFirstDishByName(name) {
     return dishes.filter((dish) => dish.name == name)[0];
@@ -44,3 +50,5 @@ export default function Main() {
     </div>
   );
 }
+
+export default withRouter(connect(mapStateToProps)(Main));
