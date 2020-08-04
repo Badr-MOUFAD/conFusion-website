@@ -6,12 +6,13 @@ import { Card, CardBody, CardImg, CardTitle, CardText, Button } from 'reactstrap
 import { Modal, ModalBody, ModalHeader, Label } from "reactstrap";
 import { LocalForm, Control, Errors } from "react-redux-form";
 //m component
-import BreadcrumbComponent from './BreadcrumbComponent';
+// import BreadcrumbComponent from './BreadcrumbComponent';
 
 
 export default function DishDetailComponent(props) {
     const dish = props.dish;
     const [isAddCommentOpen, setIsAddCommentOpen] = useState(false); 
+    const addComment = props.addComment;
 
     if(!dish)
         return <div></div>
@@ -24,9 +25,9 @@ export default function DishDetailComponent(props) {
 
     return(
         <Container>
-            <BreadcrumbComponent location={props.location}/>
+            {/* <BreadcrumbComponent location={props.location}/> */}
             
-            {/*<DividerComponent text={`${dish.name}`}/>*/}
+            <DividerComponent text={dish.name}/>
             <Row className="d-flex justify-content-center mb-5">
                 <Col xs={12} md={5}>
                     <Card>
@@ -46,11 +47,79 @@ export default function DishDetailComponent(props) {
                     <AddCommentComponent 
                         isOpen={isAddCommentOpen} 
                         handleIsOpen={() => setIsAddCommentOpen(false)}
-                        handleSubmit={(values) => alert(JSON.stringify(values))}
+                        handleSubmit={(values) => addComment(dish.id, values.author, values.rate, values.comment)}
                         />
                 </Col>
             </Row>
         </Container>
+    );
+}
+
+export function AddCommentComponent(props) {
+    const isOpen = props.isOpen;
+    const handleIsOpen = props.handleIsOpen; 
+    const handleSubmit = props.handleSubmit;
+
+    const isRequired = (val) => Boolean(val);
+    const minLength = (val) => isRequired(val) && val.length > 2
+    const maxLength = (val) => isRequired(val) && val.length < 11
+
+    return(
+        <Modal isOpen={isOpen}>
+            <ModalHeader>
+                <h3>Add Comment</h3> 
+            </ModalHeader>
+            <ModalBody>
+                <LocalForm onSubmit={(values) => handleSubmit(values)}>
+                    <Container>
+                        <Row class="form-group my-1">
+                            <Label>
+                                Rate
+                            </Label>
+                            <Control.select model=".rate" className="form-control">
+                                {["1", "2", "3", "4", "5"].map((num) => 
+                                    <option value={num}>{num}</option>
+                                )}
+                            </Control.select>
+                        </Row>
+                        <Row className='form-group my-1'>
+                            <Label>
+                                Your Name
+                            </Label>
+                            <Control.text 
+                            model=".author" 
+                            className="form-control" 
+                            placeholder="Enter Your Name"
+                            validators={{ isRequired, minLength, maxLength }}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".authorName"
+                                show="touched"
+                                messages={{
+                                    isRequired: "This field can not be empty",
+                                    minLength: "Name must contain at least 3 caracters",
+                                    maxLength: "Name must contain at maximum 10 caracters"
+                                }}/>
+                        </Row>
+                        <Row className="form-group my-3">
+                            <Label>
+                                Your Comment
+                            </Label>
+                            <Control.textarea model=".comment" rows="6" className="form-control" placeholder="Enter Your Comment"/>
+                        </Row>
+                        <Row className="form-group">
+                            <Button type="submit" color="primary" className="mr-1">
+                                <i class="fas fa-paper-plane"></i> Submit
+                            </Button>
+                            <Button color="secondary" onClick={() => handleIsOpen()}>
+                                Cancel
+                            </Button>
+                        </Row>
+                    </Container>
+                </LocalForm>
+            </ModalBody>
+        </Modal>
     );
 }
 
@@ -95,73 +164,5 @@ export function DividerComponent(props) {
                 <hr />
             </Col>
         </Row> 
-    );
-}
-
-export function AddCommentComponent(props) {
-    const isOpen = props.isOpen;
-    const handleIsOpen = props.handleIsOpen; 
-    const handleSubmit = props.handleSubmit;
-
-    const isRequired = (val) => Boolean(val);
-    const minLength = (val) => isRequired(val) && val.length > 2
-    const maxLength = (val) => isRequired(val) && val.length < 11
-
-    return(
-        <Modal isOpen={isOpen}>
-            <ModalHeader>
-                <h3>Add Comment</h3> 
-            </ModalHeader>
-            <ModalBody>
-                <LocalForm onSubmit={(values) => handleSubmit(values)}>
-                    <Container>
-                        <Row class="form-group my-1">
-                            <Label>
-                                Rate
-                            </Label>
-                            <Control.select model=".authorRate" className="form-control">
-                                {["1", "2", "3", "4", "5"].map((num) => 
-                                    <option value={num}>{num}</option>
-                                )}
-                            </Control.select>
-                        </Row>
-                        <Row className='form-group my-1'>
-                            <Label>
-                                Your Name
-                            </Label>
-                            <Control.text 
-                            model=".authorName" 
-                            className="form-control" 
-                            placeholder="Enter Your Name"
-                            validators={{ isRequired, minLength, maxLength }}
-                            />
-                            <Errors
-                                className="text-danger"
-                                model=".authorName"
-                                show="touched"
-                                messages={{
-                                    isRequired: "This field can not be empty",
-                                    minLength: "Name must contain at least 3 caracters",
-                                    maxLength: "Name must contain at maximum 10 caracters"
-                                }}/>
-                        </Row>
-                        <Row className="form-group my-3">
-                            <Label>
-                                Your Comment
-                            </Label>
-                            <Control.textarea model=".authorComment" rows="6" className="form-control" placeholder="Enter Your Comment"/>
-                        </Row>
-                        <Row className="form-group">
-                            <Button type="submit" color="primary" className="mr-1">
-                                <i class="fas fa-paper-plane"></i> Submit
-                            </Button>
-                            <Button color="secondary" onClick={() => handleIsOpen()}>
-                                Cancel
-                            </Button>
-                        </Row>
-                    </Container>
-                </LocalForm>
-            </ModalBody>
-        </Modal>
     );
 }

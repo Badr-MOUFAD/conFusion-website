@@ -1,6 +1,7 @@
 import React from 'react';
 //redux
 import { connect } from 'react-redux';
+import { addComment } from "../redux/ActionCreators";
 //navigaiton
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 //layout
@@ -25,13 +26,20 @@ const mapStateToProps = (state) => {
   }
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addComment: (dishId, author, rate, comment) => dispatch(addComment(dishId, author, rate, comment))
+  }
+};
+
 
 function Main(props) {
   const dishes = props.dishes;
   const leaders = props.leaders;
   const promotions = props.promotions;
+  const addComment = props.addComment;
 
-  function getFirstDishByName(name) {
+  function getFirstDishByName(name) { 
     return dishes.filter((dish) => dish.name == name)[0];
   }
 
@@ -42,7 +50,7 @@ function Main(props) {
         <Route path="/home" component={() => <HomeComponent promotion={promotions[0]} dish={dishes[0]} leader={leaders[0]}/>}/>
         <Route path="/about-us" component={({ location }) => <AboutUsComponent location={location} leaders={leaders}/>}/>
         <Route exact path="/menu" component={({ location }) => <MenuComponent location={location} dishes={dishes}/>}/>
-        <Route path="/menu/:name" component={({ match, location }) => <DishDetailComponent location={location} dish={getFirstDishByName(match.params.name)}/>}/>
+        <Route path="/menu/:name" component={({ match, location }) => <DishDetailComponent location={location} dish={getFirstDishByName(match.params.name)} addComment={addComment}/>}/>
         <Route path="/contact-us" component={({ location }) => <ContactComponent location={location}/>}/>
         <Redirect to="/home"/>
       </Switch>
@@ -51,4 +59,4 @@ function Main(props) {
   );
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
