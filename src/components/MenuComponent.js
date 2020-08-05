@@ -8,15 +8,27 @@ import { Card, CardBody, CardImg, CardImgOverlay, CardText, CardTitle } from 're
 import { Badge } from 'reactstrap';
 //m component
 import BreadcrumbComponent from './BreadcrumbComponent';
+import LoadingComponent from "./LoadingComponent";
 
 
 
 export default function MenuComponent(props) {
     const dishes = props.dishes;
+    const isLoading = props.isLoading;
+    const errorMessage = props.errorMessage;
+
+    if(isLoading) {
+        return <LoadingComponent isLoading={isLoading} errorMessage={errorMessage}/>
+    }
+
+    if(errorMessage) {
+        return <LoadingComponent isLoading={isLoading} errorMessage={errorMessage}/>
+    }
 
     return(
         <Container>
             <BreadcrumbComponent location={props.location}/>
+
             <Row className="d-flex justify-content-center row-content" style={{borderBottomWidth: '0px'}}>
                 {dishes.map((dish) => <MenuItem key={dish.id} dish={dish}/>)}
             </Row>

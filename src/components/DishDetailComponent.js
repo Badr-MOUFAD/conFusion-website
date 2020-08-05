@@ -7,13 +7,24 @@ import { Modal, ModalBody, ModalHeader, Label } from "reactstrap";
 import { LocalForm, Control, Errors } from "react-redux-form";
 //m component
 // import BreadcrumbComponent from './BreadcrumbComponent';
+import LoadingComponent from "./LoadingComponent";
 
 
 export default function DishDetailComponent(props) {
     const dish = props.dish;
     const [isAddCommentOpen, setIsAddCommentOpen] = useState(false); 
     const addComment = props.addComment;
+    const isLoading = props.isLoading;
+    const errorMessage = props.errorMessage;
 
+    if(isLoading) {
+        return <LoadingComponent isLoading={isLoading} errorMessage={errorMessage}/>
+    }
+
+    if(errorMessage) {
+        return <LoadingComponent isLoading={isLoading} errorMessage={errorMessage}/>
+    }
+    
     if(!dish)
         return <div></div>
 

@@ -5,9 +5,20 @@ import { Container, Row, Col, CardTitle, CardSubtitle, CardFooter } from 'reacts
 import { Card, CardBody, CardImg, CardText } from "reactstrap";
 import { Button, Collapse } from 'reactstrap';
 
+import LoadingComponent from "./LoadingComponent";
 
 export default function HomeComponent(props) {
-    const items = [props.dish, props.promotion, props.leader]
+    const items = [props.dish, props.promotion, props.leader];
+    const isLoading = props.isLoading;
+    const errorMessage = props.errorMessage;
+
+    if(isLoading) {
+        return <LoadingComponent isLoading={isLoading} errorMessage={errorMessage}/>
+    }
+
+    if(errorMessage) {
+        return <LoadingComponent isLoading={isLoading} errorMessage={errorMessage}/>
+    }
     
     return(
         <Container>
