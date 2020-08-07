@@ -21,14 +21,6 @@ export const dishesLoading = () => {
     }
 }
 
-export const fetchDishes = () => (dispatch) => {
-    dispatch(dishesLoading());
-
-    fetch(baseUrl + "dishes")
-    .then(response => response.json())
-    .then(dishes => dispatch(addDishes(dishes)))
-}
-
 export const addDishes = (dishes) => {
     return {
         type: ActionTypes.ADD_DISHES,
@@ -40,6 +32,25 @@ export const dishFailed = (errorMessage) => {
         type: ActionTypes.DISHES_FAILED,
         payload: errorMessage
     }
+}
+
+export const fetchDishes = () => (dispatch) => {
+    dispatch(dishesLoading());
+
+    fetch(baseUrl + "dishes")
+    .then(response => {
+        if(response.ok) {
+            return response;
+        }
+        else {
+            throw new Error(response.status + " " + response.statusText);
+        }
+    }, err => {
+        throw new Error(err.message)
+    })
+    .then(response => response.json())
+    .then(dishes => dispatch(addDishes(dishes)))
+    .catch(err => dispatch(dishFailed(err.message)))
 }
 
 export const promosLoading = (promos) => {
@@ -67,6 +78,17 @@ export const fetchPromos = () => (dispatch) => {
     dispatch(promosLoading());
 
     fetch(baseUrl + "promotions")
+    .then(response => {
+        if(response.ok) {
+            return response;
+        }
+        else {
+            throw new Error(response.status + " " + response.statusText);
+        }
+    }, err => {
+        throw new Error(err.message);
+    })
     .then(response => response.json())
     .then(promotions => dispatch(addPromotions(promotions)))
+    .catch(err => dispatch(promosFailed(err.message)))
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 //redux
 import { connect } from 'react-redux';
 import { addComment, addDishes, dishesLoading, dishFailed, fetchDishes } from "../redux/ActionCreators";
@@ -52,6 +52,9 @@ function Main(props) {
 
   useEffect(() => {
     fetchPromos();
+  }, [])
+
+  useEffect(() => {
     fetchDishes();
   }, []);
 
