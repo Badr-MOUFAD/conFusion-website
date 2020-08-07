@@ -17,6 +17,8 @@ import HomeComponent from './HomeComponent';
 import MenuComponent from './MenuComponent';
 import DishDetailComponent, { DividerComponent } from './DishDetailComponent';
 import AboutUsComponent from './AboutUsComponent';
+//animation
+import { CSSTransition, TransitionGroup } from "react-transition-group"
 
 
 const mapStateToProps = (state) => {
@@ -65,14 +67,18 @@ function Main(props) {
   return (
     <div>
       <Header />
-      <Switch>
-        <Route path="/home" component={() => <HomeComponent promotion={promotions[0]} dish={dishes[0]} leader={leaders[0]} isLoading={isLoading} errorMessage={errorMessage} errorMessagePromos={errorMessagePromos} isLoadingPromos={isLoadingPromos}/>}/>
-        <Route path="/about-us" component={({ location }) => <AboutUsComponent location={location} leaders={leaders}/>}/>
-        <Route exact path="/menu" component={({ location }) => <MenuComponent location={location} dishes={dishes} isLoading={isLoading} errorMessage={errorMessage}/>}/>
-        <Route path="/menu/:name" component={({ match, location }) => <DishDetailComponent location={location} dish={getFirstDishByName(match.params.name)} addComment={addComment} isLoading={isLoading} errorMessage={errorMessage}/>}/>
-        <Route path="/contact-us" component={({ location }) => <ContactComponent location={location}/>}/>
-        <Redirect to="/home"/>
-      </Switch>
+      <TransitionGroup>
+        <CSSTransition key={props.location.key} timeout={300} classNames="page">
+          <Switch location={props.location}>
+            <Route path="/home" component={() => <HomeComponent promotion={promotions[0]} dish={dishes[0]} leader={leaders[0]} isLoading={isLoading} errorMessage={errorMessage} errorMessagePromos={errorMessagePromos} isLoadingPromos={isLoadingPromos}/>}/>
+            <Route path="/about-us" component={({ location }) => <AboutUsComponent location={location} leaders={leaders}/>}/>
+            <Route exact path="/menu" component={({ location }) => <MenuComponent location={location} dishes={dishes} isLoading={isLoading} errorMessage={errorMessage}/>}/>
+            <Route path="/menu/:name" component={({ match, location }) => <DishDetailComponent location={location} dish={getFirstDishByName(match.params.name)} addComment={addComment} isLoading={isLoading} errorMessage={errorMessage}/>}/>
+            <Route path="/contact-us" component={({ location }) => <ContactComponent location={location}/>}/>
+            <Redirect to="/home"/>
+          </Switch>
+        </CSSTransition> 
+      </TransitionGroup> 
       <Footer />
     </div>
   );
