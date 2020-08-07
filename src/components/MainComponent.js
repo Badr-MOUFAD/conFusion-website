@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 //redux
 import { connect } from 'react-redux';
 import { addComment, addDishes, dishesLoading, dishFailed, fetchDishes } from "../redux/ActionCreators";
+import { addPromotions,  promosLoading, promosFailed, fetchPromos } from "../redux/ActionCreators";
 //navigaiton
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 //layout
@@ -29,7 +30,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addComment: (dishId, author, rate, comment) => dispatch(addComment(dishId, author, rate, comment)),
-    fetchDishes: () => dispatch(fetchDishes())
+    fetchDishes: () => dispatch(fetchDishes()),
+    fetchPromos: () => dispatch(fetchPromos())
   }
 };
 
@@ -38,13 +40,18 @@ function Main(props) {
   const isLoading = props.dishes.isLoading;
   const errorMessage = props.dishes.errorMessage;
 
+  const promotions = props.promotions.promotions;
+  const isLoadingPromos = props.promotions.isLoading;
+  const errorMessagePromos = props.promotions.errorMessage;
+
   const leaders = props.leaders;
-  const promotions = props.promotions;
   const addComment = props.addComment;
 
   const fetchDishes = props.fetchDishes;
+  const fetchPromos = props.fetchPromos;
 
   useEffect(() => {
+    fetchPromos();
     fetchDishes();
   }, []);
 
@@ -56,7 +63,7 @@ function Main(props) {
     <div>
       <Header />
       <Switch>
-        <Route path="/home" component={() => <HomeComponent promotion={promotions[0]} dish={dishes[0]} leader={leaders[0]} isLoading={isLoading} errorMessage={errorMessage}/>}/>
+        <Route path="/home" component={() => <HomeComponent promotion={promotions[0]} dish={dishes[0]} leader={leaders[0]} isLoading={isLoading} errorMessage={errorMessage} errorMessagePromos={errorMessagePromos} isLoadingPromos={isLoadingPromos}/>}/>
         <Route path="/about-us" component={({ location }) => <AboutUsComponent location={location} leaders={leaders}/>}/>
         <Route exact path="/menu" component={({ location }) => <MenuComponent location={location} dishes={dishes} isLoading={isLoading} errorMessage={errorMessage}/>}/>
         <Route path="/menu/:name" component={({ match, location }) => <DishDetailComponent location={location} dish={getFirstDishByName(match.params.name)} addComment={addComment} isLoading={isLoading} errorMessage={errorMessage}/>}/>

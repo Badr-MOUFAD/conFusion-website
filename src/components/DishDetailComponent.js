@@ -8,6 +8,7 @@ import { LocalForm, Control, Errors } from "react-redux-form";
 //m component
 // import BreadcrumbComponent from './BreadcrumbComponent';
 import LoadingComponent from "./LoadingComponent";
+import { baseUrl } from '../shared/baseUrl';
 
 
 export default function DishDetailComponent(props) {
@@ -42,7 +43,7 @@ export default function DishDetailComponent(props) {
             <Row className="d-flex justify-content-center mb-5">
                 <Col xs={12} md={5}>
                     <Card>
-                        <CardImg top src={dish.image} alt={dish.name}/>
+                        <CardImg top src={baseUrl + dish.image} alt={dish.name}/>
                         <CardBody>
                             <CardTitle><h5>{dish.name}</h5></CardTitle>
                             <CardText>{dish.description}</CardText>

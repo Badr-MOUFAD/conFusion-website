@@ -10,6 +10,8 @@ import { Badge } from 'reactstrap';
 import BreadcrumbComponent from './BreadcrumbComponent';
 import LoadingComponent from "./LoadingComponent";
 
+import { baseUrl } from "../shared/baseUrl";
+
 
 
 export default function MenuComponent(props) {
@@ -44,7 +46,7 @@ export function MenuItem(props) {
         <Col xs={12} md={{size: 5}} className="pt-1 pb-1">
             <Card>
                 <Link to={`/menu/${dish.name}`}>
-                    <CardImg width="100%" src={dish.image} alt={dish.name}/>
+                    <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name}/>
                     <CardImgOverlay>
                         <CardTitle>
                             <Badge pill color="secondary"><span className="lead">{dish.name}</span></Badge>

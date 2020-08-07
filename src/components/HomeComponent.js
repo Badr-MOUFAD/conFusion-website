@@ -7,25 +7,36 @@ import { Button, Collapse } from 'reactstrap';
 
 import LoadingComponent from "./LoadingComponent";
 
+import { baseUrl } from "../shared/baseUrl";
+
 export default function HomeComponent(props) {
-    const items = [props.dish, props.promotion, props.leader];
-    const isLoading = props.isLoading;
-    const errorMessage = props.errorMessage;
-
-    if(isLoading) {
-        return <LoadingComponent isLoading={isLoading} errorMessage={errorMessage}/>
-    }
-
-    if(errorMessage) {
-        return <LoadingComponent isLoading={isLoading} errorMessage={errorMessage}/>
-    }
+    const items = [
+        {
+            objectToDisplay: props.dish,
+            isLoading: props.isLoading,
+            errorMessage: props.errorMessage
+        },
+        {
+            objectToDisplay: props.promotion,
+            isLoading: props.isLoadingPromos,
+            errorMessage: props.errorMessagePromos
+        },
+        {
+            objectToDisplay: props.leader,
+            isLoading: null,
+            errorMessage: null
+        }];
     
     return(
         <Container>
             <Row className="row-content">
-                {items.map((itemToRender) => 
+                {items.map((item) => 
                     <Col xs={{size: 12, offset: 0}} md={{size: 4, offset: 0}} className="mb-2">
-                        <RenderAsCard item={itemToRender}/>
+                        {(item.isLoading || item.errorMessage) ? 
+                        <LoadingComponent isLoading={item.isLoading} errorMessage={item.errorMessage}/> :
+                        <RenderAsCard item={item.objectToDisplay}/>
+                        }
+                        
                     </Col>
                 )}
             </Row>
@@ -38,7 +49,7 @@ export function RenderAsCard({ item }) {
 
     return(
         <Card>
-            <CardImg src={item.image} alt={item.name}/>
+            <CardImg src={baseUrl + item.image} alt={item.name}/>
             <CardBody>
                 <CardTitle>
                     <h5>{item.name}</h5>

@@ -1,5 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { DISHES } from "../shared/dishes";
+import { baseUrl } from "../shared/baseUrl";
 
 
 export const addComment = (dishId, author, rate, comment) => {
@@ -23,9 +24,9 @@ export const dishesLoading = () => {
 export const fetchDishes = () => (dispatch) => {
     dispatch(dishesLoading());
 
-    setTimeout(() => {
-        dispatch(addDishes(DISHES));
-    }, 2000);
+    fetch(baseUrl + "dishes")
+    .then(response => response.json())
+    .then(dishes => dispatch(addDishes(dishes)))
 }
 
 export const addDishes = (dishes) => {
@@ -39,4 +40,33 @@ export const dishFailed = (errorMessage) => {
         type: ActionTypes.DISHES_FAILED,
         payload: errorMessage
     }
+}
+
+export const promosLoading = (promos) => {
+    return {
+        type: ActionTypes.PROMOS_LOADING,
+        payload: promos
+    }
+}
+
+export const promosFailed = (errorMessage) => {
+    return{
+        type: ActionTypes.PROMOS_FAILED,
+        payload: errorMessage
+    }
+}
+
+export const addPromotions = (promos) => {
+    return{
+        type:ActionTypes.ADD_PROMOS,
+        payload: promos
+    }
+}
+
+export const fetchPromos = () => (dispatch) => {
+    dispatch(promosLoading());
+
+    fetch(baseUrl + "promotions")
+    .then(response => response.json())
+    .then(promotions => dispatch(addPromotions(promotions)))
 }

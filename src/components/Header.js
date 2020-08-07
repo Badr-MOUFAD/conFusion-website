@@ -106,9 +106,9 @@ export function LoginForm(props) {
                             <InputGroupText><i class="fas fa-user"></i></InputGroupText>
                         </InputGroupAddon>
                         <Input 
-                        type="email" 
-                        placeholder="Enter Your Email"
-                        innerRef={(el) => {email.current = el;}}
+                            type="email" 
+                            placeholder="Enter Your Email"
+                            innerRef={(el) => {email.current = el;}}
                         />
                     </InputGroup>
                     <InputGroup className="my-2">
@@ -129,7 +129,7 @@ export function LoginForm(props) {
                                 innerRef={(el) => {rememberMe.current = el;}}
                                 />
                         </InputGroupAddon>
-                        <strong> Remember Me</strong>
+                        <strong> Remember Me?</strong>
                     </InputGroup>
                 </Form>
             </ModalBody>
