@@ -4,10 +4,13 @@ import { Container, Row, Col, CardTitle, CardSubtitle, CardFooter } from 'reacts
 //component
 import { Card, CardBody, CardImg, CardText } from "reactstrap";
 import { Button, Collapse } from 'reactstrap';
+//animatiom
+import { Fade } from "react-animation-components";
 
 import LoadingComponent from "./LoadingComponent";
 
 import { baseUrl } from "../shared/baseUrl";
+
 
 export default function HomeComponent(props) {
     const items = [
@@ -48,27 +51,29 @@ export function RenderAsCard({ item }) {
     const [showDescription, setShowDescription] = useState(false);
 
     return(
-        <Card>
-            <CardImg src={baseUrl + item.image} alt={item.name}/>
-            <CardBody>
-                <CardTitle>
-                    <h5>{item.name}</h5>
-                    <CardSubtitle className="text-muted">
-                        {item.designation ? item.designation : "..."}
-                    </CardSubtitle>
-                </CardTitle>
-                <CardText>
-                    <Collapse isOpen={showDescription}>
-                        {item.description}
-                    </Collapse>
-                </CardText>
-                <Row className="d-flex justify-content-end mt-3">
-                    <DescriptionButton 
-                            initialState={showDescription} 
-                            onToggle={(param) => setShowDescription(!param)}/>
-                </Row>
-            </CardBody>
-        </Card>
+        <Fade in>
+            <Card>
+                <CardImg src={baseUrl + item.image} alt={item.name}/>
+                <CardBody>
+                    <CardTitle>
+                        <h5>{item.name}</h5>
+                        <CardSubtitle className="text-muted">
+                            {item.designation ? item.designation : "..."}
+                        </CardSubtitle>
+                    </CardTitle>
+                    <CardText>
+                        <Collapse isOpen={showDescription}>
+                            {item.description}
+                        </Collapse>
+                    </CardText>
+                    <Row className="d-flex justify-content-end mt-3">
+                        <DescriptionButton 
+                                initialState={showDescription} 
+                                onToggle={(param) => setShowDescription(!param)}/>
+                    </Row>
+                </CardBody>
+            </Card>
+        </Fade>
     );
 }
 

@@ -9,6 +9,8 @@ import { LocalForm, Control, Errors } from "react-redux-form";
 // import BreadcrumbComponent from './BreadcrumbComponent';
 import LoadingComponent from "./LoadingComponent";
 import { baseUrl } from '../shared/baseUrl';
+//animation
+import { Fade, Stagger } from 'react-animation-components';
 
 
 export default function DishDetailComponent(props) {
@@ -33,7 +35,7 @@ export default function DishDetailComponent(props) {
     let commentSection = <div>No comments about this dish</div>
 
     if(comments.length)
-        commentSection = comments.map((comment) => <CommentComponent key={comment.id} commentObject={comment} />);
+        commentSection = comments.map((comment) => <Fade in><CommentComponent key={comment.id} commentObject={comment}/></Fade>);
 
     return(
         <Container>
@@ -42,17 +44,21 @@ export default function DishDetailComponent(props) {
             <DividerComponent text={dish.name}/>
             <Row className="d-flex justify-content-center mb-5">
                 <Col xs={12} md={5}>
-                    <Card>
-                        <CardImg top src={baseUrl + dish.image} alt={dish.name}/>
-                        <CardBody>
-                            <CardTitle><h5>{dish.name}</h5></CardTitle>
-                            <CardText>{dish.description}</CardText>
-                        </CardBody>
-                    </Card>
+                    <Fade in>
+                        <Card>
+                            <CardImg top src={baseUrl + dish.image} alt={dish.name}/>
+                            <CardBody>
+                                <CardTitle><h5>{dish.name}</h5></CardTitle>
+                                <CardText>{dish.description}</CardText>
+                            </CardBody>
+                        </Card>
+                    </Fade>
                 </Col>
                 <Col xs={12} md={5}>
                     <h4 className="mb-5">Comments</h4>
-                    {commentSection}
+                    <Stagger in>
+                        {commentSection}
+                    </Stagger>
                     <Button className="mt-2" color="secondary" onClick={() => setIsAddCommentOpen(true)}>
                         <i class="fas fa-pen"></i> Add Comment
                     </Button>
