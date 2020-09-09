@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 //layout
-import { Container, Row, Col, CardTitle, CardSubtitle, CardFooter } from 'reactstrap';
+import { Container, Row, Col, CardTitle, CardSubtitle } from 'reactstrap';
 //component
 import { Card, CardBody, CardImg, CardText } from "reactstrap";
 import { Button, Collapse } from 'reactstrap';
@@ -26,8 +26,8 @@ export default function HomeComponent(props) {
         },
         {
             objectToDisplay: props.leader,
-            isLoading: null,
-            errorMessage: null
+            isLoading: props.isLoadingLeaders,
+            errorMessage: props.errorMessageLeaders
         }];
     
     return(

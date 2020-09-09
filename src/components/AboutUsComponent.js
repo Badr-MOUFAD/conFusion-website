@@ -6,11 +6,18 @@ import { Card, CardHeader, CardBody } from 'reactstrap';
 import { Media } from "reactstrap";
 //m component
 import BreadcrumbComponent from './BreadcrumbComponent';
+import { baseUrl } from '../shared/baseUrl';
+import LoadingComponent from './LoadingComponent';
+//animation
+import { Fade, Stagger } from "react-animation-components";
 
 
 
 export default function AboutUsComponent(props) {
     const leaders = props.leaders;
+    const isLoadingLeaders = props.isLoadingLeaders;
+    const errorMessageLeaders = props.errorMessageLeaders;
+
     const facts = [
         {term: "Started", description: "3 Feb. 2013"},
         {term: "Major Stake Holder", description: "HK Fine Foods Inc."},
@@ -32,7 +39,9 @@ export default function AboutUsComponent(props) {
                     <Quote />
                 </Col>
             </Row>
-            <LeadersSection leaders={leaders}/>
+            {(isLoadingLeaders || errorMessageLeaders) ? 
+            <LoadingComponent isLoading={isLoadingLeaders} errorMessage={errorMessageLeaders}/> :
+            <LeadersSection leaders={leaders}/>}
         </Container>
     );
 }
@@ -102,7 +111,9 @@ export function LeadersSection(props) {
                 <h2><i class="fas fa-chess-queen"></i> Corporate Leadership</h2>
             </Col>
             <Col xs={{size: 12, offset: 0}}>
-                {leaders.map((leader) => <RenderLeader key={leader.id} leader={leader}/>)}
+                <Stagger in>
+                    {leaders.map((leader) => <RenderLeader key={leader.id} leader={leader}/>)}
+                </Stagger>
             </Col>
         </Row>
     );
@@ -112,17 +123,19 @@ export function RenderLeader(props) {
     const leader = props.leader;
 
     return(
-        <Media className="my-5">
-            <Media left className="mr-5">
-                <Media object src={leader.image} className="rounded"></Media>
-            </Media>
-            <Media body>
-                <Media heading>
-                    <h3>{leader.name} </h3>
-                    <small className="text-muted">{leader.designation}</small>
+        <Fade in>
+            <Media className="my-5">
+                <Media left className="mr-5">
+                    <Media object src={baseUrl + leader.image} className="rounded"></Media>
                 </Media>
-                <p>{leader.description}</p>
+                <Media body>
+                    <Media heading>
+                        <h3>{leader.name} </h3>
+                        <small className="text-muted">{leader.designation}</small>
+                    </Media>
+                    <p>{leader.description}</p>
+                </Media>
             </Media>
-        </Media>
+        </Fade>
     );
 }

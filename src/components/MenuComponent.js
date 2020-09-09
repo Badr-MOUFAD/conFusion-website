@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 //navigation
 import { Link } from 'react-router-dom';
 //layout
 import { Container, Row, Col } from 'reactstrap';
 //reactstrap components
-import { Card, CardBody, CardImg, CardImgOverlay, CardText, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
 import { Badge } from 'reactstrap';
 //m component
 import BreadcrumbComponent from './BreadcrumbComponent';

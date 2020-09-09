@@ -1,4 +1,4 @@
-import React, { useState, useRef, useReducer } from 'react';
+import React, { useState, useRef } from 'react';
 //navigation
 import { NavLink } from 'react-router-dom';
 //layout

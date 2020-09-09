@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'reactstrap';
 //components
 import { Card, CardHeader, CardBody, CardFooter } from 'reactstrap';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import { FormFeedback, FormText } from "reactstrap";
+import { FormText } from "reactstrap";
 //m component
 import BreadcrumbComponent from './BreadcrumbComponent';
 
@@ -63,7 +63,9 @@ export default function ContactComponent(props) {
             default:
                 break;
         }
-    }
+    };
+
+    const postFeedback = props.postFeedback;
 
     return(
         <Container>
@@ -115,7 +117,7 @@ export default function ContactComponent(props) {
                     <h3><i class="fas fa-comments mr-3"> </i>Your FeedBack</h3>
                 </Col>
                 <Col xs={12} md={9}>
-                    <Form onSubmit={(e) => {alert(JSON.stringify(formContact)); e.preventDefault()}}>
+                    <Form onSubmit={(e) => {postFeedback(formContact)}}>
                         <FormGroup row>
                             <Label htmlFor="firstName" md={{size: 2, offset: 0}}>First Name</Label>
                             <Col md={{size: 10, offset: 0}}>

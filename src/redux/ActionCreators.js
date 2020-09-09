@@ -1,5 +1,4 @@
 import * as ActionTypes from "./ActionTypes";
-import { DISHES } from "../shared/dishes";
 import { baseUrl } from "../shared/baseUrl";
 
 
@@ -13,6 +12,29 @@ export const addComment = (dishId, author, rate, comment) => {
             dishId: dishId
         }
     }
+}
+
+export const postFeedback = (feedback) => (dispatch) => {
+    fetch(baseUrl + "feedback", {
+        method: "POST",
+        body: JSON.stringify(feedback),
+        headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "same-origin"
+    })
+    .then(response => {
+        if(response.ok) {
+            return response.json();
+        }
+        else {
+            throw new Error(response.status + " " + response.statusText);
+        }
+    }, err => {
+        throw new Error(err.message)
+    })
+    .then(response => {alert(JSON.stringify(response))})
+    .catch(err => alert("Feedback send successfully"))
 }
 
 export const dishesLoading = () => {
@@ -91,4 +113,41 @@ export const fetchPromos = () => (dispatch) => {
     .then(response => response.json())
     .then(promotions => dispatch(addPromotions(promotions)))
     .catch(err => dispatch(promosFailed(err.message)))
+}
+
+export const leadersLoading = () => {
+    return {
+        type: ActionTypes.LEADERS_LOADING
+    }
+}
+
+export const leadersFailed = () => {
+    return {
+        type: ActionTypes.LEADERS_FAILED
+    }
+}
+
+export const addLeaders = (leaders) => {
+    return {
+        type: ActionTypes.ADD_LEADERS,
+        payload: leaders
+    }
+}
+
+export const fetchLeaders = () => (dispatch) => {
+    dispatch(leadersLoading);
+
+    fetch(baseUrl + "leaders")
+    .then(response => {
+        if(response.ok) {
+            return response.json();
+        }
+        else {
+            throw new Error(response.status + " " + response.statusText);
+        }
+    }, err => {
+        throw new Error(err.message);
+    })
+    .then(leaders => dispatch(addLeaders(leaders)))
+    .catch(err => dispatch(leadersFailed(err.message)));
 }

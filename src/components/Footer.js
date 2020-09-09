@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 //layout
 import { Container, Row, Col, Nav } from "reactstrap";
 //reactstrap component
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { ListGroup } from 'reactstrap';
 import { PAGES, SOCIAL_MEDIA } from '../shared/pageInformation';
 
 export default function Footer(props) {
